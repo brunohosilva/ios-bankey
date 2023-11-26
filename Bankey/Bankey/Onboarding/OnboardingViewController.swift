@@ -13,29 +13,45 @@ class OnboardingViewController: UIViewController {
     let imageView = UIImageView()
     let label = UILabel()
     
+    let imageName: String
+    let titleText: String
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
         layout()
+    }
+    
+    init(imageName: String, titleText: String) {
+        self.imageName = imageName
+        self.titleText = titleText
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension OnboardingViewController {
     
     func style() {
+        view.backgroundColor = .systemBackground
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 20
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "delorean")
+        imageView.image = UIImage(named: imageName)
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         label.numberOfLines = 0
-        label.text = "Estudando iOS, desenvolvendo um app simples e aplicando conhecimentos"
+        label.text = titleText
         label.font = UIFont.preferredFont(forTextStyle: .title3)
     }
     
