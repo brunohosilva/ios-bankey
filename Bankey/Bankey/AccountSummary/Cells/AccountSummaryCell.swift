@@ -21,7 +21,7 @@ class AccountSummaryCell: UITableViewCell {
     let chevronImageView = UIImageView()
     
     static let reuseID = "AccountSummaryCell"
-    static let rowHeight: CGFloat = 100
+    static let rowHeight: CGFloat = 112
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -61,7 +61,7 @@ extension AccountSummaryCell{
         
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceAmountLabel.textAlignment = .right
-        balanceAmountLabel.text = "$999"
+        balanceAmountLabel.attributedText = makeFormattedBalance(money: "125", cents: "35")
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         let chevronimage = UIImage(systemName: "chevron.right")!.withTintColor(appColor, renderingMode: .alwaysOriginal)
@@ -96,4 +96,19 @@ extension AccountSummaryCell{
             trailingAnchor.constraint(equalToSystemSpacingAfter: chevronImageView.trailingAnchor, multiplier: 1)
         ])
     }
+    
+    private func makeFormattedBalance(money: String, cents: String) -> NSMutableAttributedString {
+           let moneySignAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .callout), .baselineOffset: 8]
+           let moneyAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .title1)]
+           let centAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .footnote), .baselineOffset: 8]
+           
+           let rootString = NSMutableAttributedString(string: "R$", attributes: moneySignAttributes)
+           let moneyString = NSAttributedString(string: money, attributes: moneyAttributes)
+           let centString = NSAttributedString(string: cents, attributes: centAttributes)
+           
+           rootString.append(moneyString)
+           rootString.append(centString)
+           
+           return rootString
+       }
 }
