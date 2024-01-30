@@ -31,7 +31,7 @@ struct CurrencyFormatter {
         formatter.locale = Locale(identifier: "pt_BR")
         let decimalSeparator = formatter.decimalSeparator! // "."
         let dollarComponents = dollarsWithDecimal.components(separatedBy: decimalSeparator) // "$929,466" "00"
-        var dollars = dollarComponents.first! // "$929,466"
+        let dollars = dollarComponents.first! // "$929,466"
         
         return dollars
     }

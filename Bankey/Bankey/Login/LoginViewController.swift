@@ -155,12 +155,12 @@ extension LoginViewController {
             return
         }
         
-        if username.isEmpty || password.isEmpty {
-            configureView(withMessage: "Nome do usuário ou senha não pode estar vazio")
-            return
-        }
+//        if username.isEmpty || password.isEmpty {
+//            configureView(withMessage: "Nome do usuário ou senha não pode estar vazio")
+//            return
+//        }
         
-        if username == "Bruno" && password == "12345" {
+        if username == "" && password == "" {
             signInButton.configuration?.showsActivityIndicator = true
             delegate?.didLogin()
         } else {
