@@ -20,8 +20,11 @@ class AccountSummaryViewController: UIViewController {
         date: Date()
     )
     var accountCellViewModels: [AccountSummaryCell.ViewModel] = []
+    
+    //Components
     var tableView = UITableView()
     var headerView = AccountSummaryHeaderView(frame: .zero)
+    let refreshControl = UIRefreshControl()
 
     lazy var logoutButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
@@ -46,6 +49,7 @@ extension AccountSummaryViewController {
         setupTableView()
         setupTableHeaderView()
         fetchData()
+        setupRefreshControl()
     }
     
     private func setupTableView() {
@@ -79,6 +83,12 @@ extension AccountSummaryViewController {
     func setupNavigationBar() {
         navigationItem.rightBarButtonItem = logoutButtonItem
     }
+    
+    func setupRefreshControl() {
+        refreshControl.tintColor = appColor
+        refreshControl.addTarget(self, action: #selector(refreshContent), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
@@ -100,14 +110,6 @@ extension AccountSummaryViewController: UITableViewDataSource {
 extension AccountSummaryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-    }
-}
-
-// MARK: Actions
-
-extension AccountSummaryViewController {
-    @objc func logoutTapped(sender: UIButton) {
-        NotificationCenter.default.post(name: .logout, object: nil)
     }
 }
 
@@ -146,6 +148,7 @@ extension AccountSummaryViewController {
         
         group.notify(queue: .main) {
             self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -164,5 +167,16 @@ extension AccountSummaryViewController {
                 balance: $0.amount
             )
         }
+    }
+}
+
+// MARK: Actions
+extension AccountSummaryViewController {
+    @objc func logoutTapped(sender: UIButton) {
+        NotificationCenter.default.post(name: .logout, object: nil)
+    }
+    
+    @objc func refreshContent() {
+        fetchData()
     }
 }
