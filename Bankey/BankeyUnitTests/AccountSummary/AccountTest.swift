@@ -53,6 +53,5 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(result.last?.name, "No-Fee All-In Chequing")
         XCTAssertEqual(result.last?.amount, 17562.44)
         XCTAssertEqual(result.last?.createdDateTime.monthDayYearString, "21/06/2011")
-        // Game on here 🕹
     }
 }
