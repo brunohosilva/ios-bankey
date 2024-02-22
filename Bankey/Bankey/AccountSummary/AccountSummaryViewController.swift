@@ -141,7 +141,7 @@ extension AccountSummaryViewController {
             case .success(let profile):
                 self.profile = profile
             case .failure(let error):
-                print(error.localizedDescription)
+                self.displayError(error: error)
             }
             
             group.leave()
@@ -153,7 +153,7 @@ extension AccountSummaryViewController {
             case .success(let accounts):
                 self.accounts = accounts
             case .failure(let error):
-                print(error.localizedDescription)
+                self.displayError(error: error)
             }
             
             group.leave()
@@ -168,12 +168,6 @@ extension AccountSummaryViewController {
             self.configureTableCells(with: self.accounts)
             self.tableView.reloadData()
         }
-        
-//        group.notify(queue: .main) {
-//            self.isLoaded = true
-//            self.tableView.reloadData()
-//            self.tableView.refreshControl?.endRefreshing()
-//        }
     }
     
     private func configureTableHeaderView(with profile: Profile) {
@@ -191,6 +185,32 @@ extension AccountSummaryViewController {
                 balance: $0.amount
             )
         }
+    }
+    
+    private func displayError(error: NetworkError) {
+        let title: String
+        let message: String
+        
+        switch error {
+        case .serverError:
+            title = "Server Error"
+            message = "Ensure you are conected to the internet. Please try gain"
+        case .decodingError:
+            title = "Decoding error"
+            message = "We could not process your request. Please try again"
+        }
+        self.showErrorAlert(title: title, message: message)
+    }
+    
+    private func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "ok", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
 
