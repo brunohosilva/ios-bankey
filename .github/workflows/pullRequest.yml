@@ -21,10 +21,15 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Use Ruby 2.7
-        uses: actions/setup-ruby@v1
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.0.x 
+
+      - name: Install dependencies
+        run: |
+          gem install bundler -v 2.4.22
+          bundle install  s
 
       - name: Install Bundler
         run: gem install bundler
