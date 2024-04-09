@@ -29,7 +29,7 @@ class ProfileTests: XCTestCase {
         let result = try! JSONDecoder().decode(Profile.self, from: data)
         
         XCTAssertEqual(result.id, "1")
-        XCTAssertEqual(result.firstName, "Kevins")
+        XCTAssertEqual(result.firstName, "Kevin")
         XCTAssertEqual(result.lastName, "Flynn")
     }
 }
