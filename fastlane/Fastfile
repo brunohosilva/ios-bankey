@@ -18,8 +18,8 @@ default_platform(:ios)
 platform :ios do
   desc "Roda e valida build e testes"
   lane :run_build_tests do
-
     scan(
+      project: "/Users/runner/work/ios-bankey/ios-bankey/Bankey.xcodeproj",
       scheme: "Bankey",
       clean: true,
       code_coverage: true
