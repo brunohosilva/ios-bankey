@@ -18,10 +18,8 @@ default_platform(:ios)
 platform :ios do
   desc "Roda e valida build e testes"
   lane :run_build_tests do
-    # Specify the path to your project file
-    project_path("Bankey.xcodeproj")
-
     scan(
+      project: "Bankey.xcodeproj",
       scheme: "Bankey",
       clean: true,
       code_coverage: true
